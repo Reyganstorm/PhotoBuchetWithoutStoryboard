@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct JSONResults: Decodable {
-    let total: Int
-    let results: [ResultObject]
-}
+//struct PhotoResults: Decodable {
+//    let total: Int
+//    let results: [Photo]
+//}
 
-struct ResultObject: Decodable {
+struct Photo: Decodable {
     
     let id: String
     let urls: URLs
