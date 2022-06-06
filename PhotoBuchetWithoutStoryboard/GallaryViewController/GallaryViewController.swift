@@ -7,11 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GallaryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        
+        title = "Gallary"
     }
 
 
