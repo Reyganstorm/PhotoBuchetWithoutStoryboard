@@ -19,6 +19,17 @@ class GallaryViewController: UIViewController {
     // MARK: - Private Proporties
     
     private var photos: [Photo] = []
+    private var searchedPhotos: [Photo] = []
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    
+    private var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
     private let photoService: PhotoService
     var collectionView: UICollectionView! = nil
@@ -48,6 +59,7 @@ class GallaryViewController: UIViewController {
         
         setupNavigationBar()
         setupCollectionView()
+        setupSearchController()
         fetch()
     }
     
@@ -87,7 +99,7 @@ class GallaryViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.prefetchDataSource = self
         collectionView.dataSource = self
-        collectionView.delegate = self
+        //collectionView.delegate = self
     }
 }
 
@@ -103,12 +115,12 @@ extension GallaryViewController: UICollectionViewDataSourcePrefetching {
 
 extension GallaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos.count
+        isFiltering ? searchedPhotos.count : photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GallaryViewCell.reuseIdentifier, for: indexPath) as! GallaryViewCell
-        let photo = photos[indexPath.row]
+        let photo = isFiltering ? searchedPhotos[indexPath.row] : photos[indexPath.row]
         cell.configuration(photo: photo)
         return cell
     }
@@ -116,11 +128,11 @@ extension GallaryViewController: UICollectionViewDataSource {
     
 }
 
-extension GallaryViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-}
+//extension GallaryViewController: UICollectionViewDelegate {
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//
+//    }
+//}
 
 extension GallaryViewController {
     private func fetch() {
@@ -133,6 +145,48 @@ extension GallaryViewController {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func fetchSearch(text: String) {
+        SearchObjectManager.shared.fetch(text: text) { result in
+            switch result {
+            case .success(let res):
+                self.searchedPhotos = res
+                self.collectionView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+
+// MARK: - SearchController
+extension GallaryViewController {
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.backgroundColor = .white
+        searchController.searchBar.tintColor = UIColor(
+            red: 21/255,
+            green: 101/255,
+            blue: 192/255,
+            alpha: 194/255
+        )
+        
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+}
+
+extension GallaryViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    private func filteredContentForSearchText(_ search: String) {
+        fetchSearch(text: search)
     }
 }
 

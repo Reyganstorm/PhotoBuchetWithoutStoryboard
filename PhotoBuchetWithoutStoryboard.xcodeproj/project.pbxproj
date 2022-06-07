@@ -21,6 +21,7 @@
 		E872488E284E2A83007D306B /* GallaryLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E872488D284E2A83007D306B /* GallaryLayout.swift */; };
 		E8724891284E31D6007D306B /* PhotoServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8724890284E31D6007D306B /* PhotoServise.swift */; };
 		E8724893284E3254007D306B /* PhotoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8724892284E3254007D306B /* PhotoInteractor.swift */; };
+		E87248B8284FE4A2007D306B /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87248B7284FE4A2007D306B /* SearchManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		E872488D284E2A83007D306B /* GallaryLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GallaryLayout.swift; sourceTree = "<group>"; };
 		E8724890284E31D6007D306B /* PhotoServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoServise.swift; sourceTree = "<group>"; };
 		E8724892284E3254007D306B /* PhotoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInteractor.swift; sourceTree = "<group>"; };
+		E87248B7284FE4A2007D306B /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			children = (
 				E8724886284E1558007D306B /* NetworkManager.swift */,
 				E872488B284E1BB1007D306B /* ImageManager.swift */,
+				E87248B7284FE4A2007D306B /* SearchManager.swift */,
 			);
 			path = NetworkServices;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				E872487B284E048B007D306B /* FavoriteViewController.swift in Sources */,
 				E8724865284DFF2D007D306B /* AppDelegate.swift in Sources */,
 				E872488E284E2A83007D306B /* GallaryLayout.swift in Sources */,
+				E87248B8284FE4A2007D306B /* SearchManager.swift in Sources */,
 				E8724881284E0C10007D306B /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

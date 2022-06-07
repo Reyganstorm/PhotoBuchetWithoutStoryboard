@@ -7,10 +7,10 @@
 
 import Foundation
 
-//struct PhotoResults: Decodable {
-//    let total: Int
-//    let results: [Photo]
-//}
+struct PhotoResults: Decodable {
+    let total: Int
+    let results: [Photo]
+}
 
 struct Photo: Decodable {
     
