@@ -33,9 +33,6 @@ class GallaryViewController: UIViewController {
     
     
     // MARK: - Public Methods
-    override func loadView() {
-        view = collectionView
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +40,11 @@ class GallaryViewController: UIViewController {
         setupCollectionView()
         setupSearchController()
         fetch()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.bounds
     }
     
     
@@ -70,7 +72,9 @@ class GallaryViewController: UIViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: GalleryViewLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         view.addSubview(collectionView)
+        
         collectionView.register(
             GallaryViewCell.self,
             forCellWithReuseIdentifier: GallaryViewCell.reuseIdentifier

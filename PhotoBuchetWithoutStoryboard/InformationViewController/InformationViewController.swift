@@ -85,7 +85,10 @@ class InformationViewController: UIViewController {
 extension InformationViewController {
     private func configurationViewWithJSONFiles() {
         photoView.fetch(from: jsonPhoto.urls.small)
-        photoView.contentMode = .scaleAspectFit
+        photoView.clipsToBounds = true
+        photoView.layer.cornerRadius = 15
+        photoView.contentMode = .scaleAspectFill
+        
         likesLabel.text = "❤️ \(jsonPhoto.likes ?? 0)"
         nameLabel.text = jsonPhoto.user.name
         locationLabel.text = """
@@ -115,7 +118,7 @@ extension InformationViewController {
         photoView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            photoView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            photoView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
             photoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             photoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             photoView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)

@@ -23,8 +23,6 @@ class GallaryViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = String(describing: GallaryViewCell.self)
     
-
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -37,7 +35,7 @@ class GallaryViewCell: UICollectionViewCell {
     
     func configuration(photo: Photo) {
         imageView.fetch(from: photo.urls.small)
-        name.text = photo.user.name
+        name.text = "\(photo.user.name)  "
     }
 }
 
@@ -48,6 +46,7 @@ private extension GallaryViewCell {
     func setupView() {
         addSubview(imageView)
         addSubview(name)
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -64,10 +63,8 @@ private extension GallaryViewCell {
             ])
         
         NSLayoutConstraint.activate([
-            //name.topAnchor.constraint(equalTo: topAnchor),
             name.bottomAnchor.constraint(equalTo: bottomAnchor),
-            //name.leftAnchor.constraint(equalTo: leftAnchor),
-            name.rightAnchor.constraint(equalTo: rightAnchor),
+            name.rightAnchor.constraint(equalTo: rightAnchor)
             ])
     }
     
