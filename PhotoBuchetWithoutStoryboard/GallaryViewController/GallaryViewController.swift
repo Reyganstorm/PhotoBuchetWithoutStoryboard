@@ -29,18 +29,7 @@ class GallaryViewController: UIViewController {
         return searchController.isActive && !searchBarIsEmpty
     }
     
-    private let photoService: PhotoService
     var collectionView: UICollectionView! = nil
-    
-    // MARK: - Constructors
-    init(photoService: PhotoService) {
-        self.photoService = photoService
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     
     // MARK: - Public Methods

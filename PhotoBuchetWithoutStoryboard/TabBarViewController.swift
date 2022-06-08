@@ -9,7 +9,7 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
 
-    private let photoService = PhotoServiceImpl()
+    //private let photoService = PhotoServiceImpl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +17,7 @@ class TabBarViewController: UITabBarController {
         tabBar.backgroundColor = .white
         view.backgroundColor = .white
         
-        let gallaryViewController = GallaryViewController(photoService: photoService)
+        let gallaryViewController = GallaryViewController()
         let gallaryImage = UIImage(systemName: "network")
         
         let favoriteViewController = FavoriteViewController()

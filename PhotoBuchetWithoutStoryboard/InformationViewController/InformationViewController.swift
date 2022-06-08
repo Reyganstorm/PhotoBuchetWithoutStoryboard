@@ -19,8 +19,9 @@ class InformationViewController: UIViewController {
     private lazy var likesLabel: UILabel = {
         let label = UILabel()
         label.text = "❤️"
-        label.font = UIFont.boldSystemFont(ofSize: 35)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
         label.backgroundColor = .white
+        
         return label
     }()
     
@@ -28,6 +29,7 @@ class InformationViewController: UIViewController {
         let label = UILabel()
         label.text = "Name of creator"
         label.font = UIFont.boldSystemFont(ofSize: 21)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -36,6 +38,7 @@ class InformationViewController: UIViewController {
         let label = UILabel()
         label.text = "location"
         label.font = UIFont.systemFont(ofSize: 19)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -43,6 +46,7 @@ class InformationViewController: UIViewController {
         let label = UILabel()
         label.text = "date"
         label.font = UIFont.systemFont(ofSize: 19)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -70,8 +74,37 @@ class InformationViewController: UIViewController {
         view.backgroundColor = .white
         setupSubviews(photoView, likesLabel, nameLabel, locationLabel, dateLabel, buttonSaveOrDelete)
         setConstrains()
+        if jsonPhoto != nil {
+            configurationViewWithJSONFiles()
+        }
+        
+    }
+}
+
+// MARK: - SubViews configaration
+extension InformationViewController {
+    private func configurationViewWithJSONFiles() {
+        photoView.fetch(from: jsonPhoto.urls.small)
+        photoView.contentMode = .scaleAspectFit
+        likesLabel.text = "❤️ \(jsonPhoto.likes ?? 0)"
+        nameLabel.text = jsonPhoto.user.name
+        locationLabel.text = """
+        Location:
+        \(jsonPhoto.user.location ?? "Planet Earht")
+        """
+        
+        let dateJ = DateManager.shared.changeWrongStringDateToRight(jsonPhoto.created_at ?? "Un")
+        dateLabel.text =
+        """
+        Date of creating:
+        \(dateJ)
+        """
     }
     
+}
+
+// MARK: - Set Views Private Proporties
+extension InformationViewController {
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
