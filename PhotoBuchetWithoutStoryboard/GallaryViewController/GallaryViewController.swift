@@ -15,9 +15,7 @@ protocol PhotoService {
 
 class GallaryViewController: UIViewController {
     
-
     // MARK: - Private Proporties
-    
     private var photos: [Photo] = []
     private var searchedPhotos: [Photo] = []
     private let searchController = UISearchController(searchResultsController: nil)
@@ -35,9 +33,7 @@ class GallaryViewController: UIViewController {
     var collectionView: UICollectionView! = nil
     
     // MARK: - Constructors
-    
     init(photoService: PhotoService) {
-        
         self.photoService = photoService
         super.init(nibName: nil, bundle: nil)
     }
@@ -48,25 +44,23 @@ class GallaryViewController: UIViewController {
     
     
     // MARK: - Public Methods
-    
     override func loadView() {
         view = collectionView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //navigationController.
-        
         setupNavigationBar()
         setupCollectionView()
         setupSearchController()
         fetch()
     }
     
+    
+    // MARK: - Private Methods
     private func setupNavigationBar() {
         title = "Gallery"
         navigationController?.navigationBar.prefersLargeTitles = false
-        
         let navBarAppearance = UINavigationBarAppearance()
         
         navBarAppearance.backgroundColor = UIColor(
@@ -77,7 +71,6 @@ class GallaryViewController: UIViewController {
         )
         
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        
         
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.standardAppearance = navBarAppearance
@@ -93,26 +86,24 @@ class GallaryViewController: UIViewController {
             GallaryViewCell.self,
             forCellWithReuseIdentifier: GallaryViewCell.reuseIdentifier
         )
-        
-        
-        
+       
         collectionView.alwaysBounceVertical = true
-        collectionView.prefetchDataSource = self
         collectionView.dataSource = self
-        //collectionView.delegate = self
+        collectionView.delegate = self
     }
 }
 
-// MARK: - UICollectionViewDataSourcePrefetching
-
-extension GallaryViewController: UICollectionViewDataSourcePrefetching {
-    
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+extension GallaryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let infoVC = InformationViewController()
+        let photo = isFiltering ? searchedPhotos[indexPath.row] : photos[indexPath.row]
+        infoVC.jsonPhoto = photo
+        present(infoVC, animated: true)
     }
 }
-    
 
 
+// MARK: - Data Source
 extension GallaryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         isFiltering ? searchedPhotos.count : photos.count
@@ -124,16 +115,9 @@ extension GallaryViewController: UICollectionViewDataSource {
         cell.configuration(photo: photo)
         return cell
     }
-    
-    
 }
 
-//extension GallaryViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//    }
-//}
-
+// MARK: - Network Fetch
 extension GallaryViewController {
     private func fetch() {
         NetworkManager.shared.fetch(from: Links.link.rawValue) { results in

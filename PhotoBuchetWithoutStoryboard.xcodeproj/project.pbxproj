@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E81CDEFC28510E680035F38A /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81CDEFB28510E680035F38A /* InformationViewController.swift */; };
 		E8724865284DFF2D007D306B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8724864284DFF2D007D306B /* AppDelegate.swift */; };
 		E8724869284DFF2D007D306B /* GallaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8724868284DFF2D007D306B /* GallaryViewController.swift */; };
 		E872486E284DFF2E007D306B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E872486D284DFF2E007D306B /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E81CDEFB28510E680035F38A /* InformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		E8724861284DFF2D007D306B /* PhotoBuchetWithoutStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBuchetWithoutStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8724864284DFF2D007D306B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8724868284DFF2D007D306B /* GallaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GallaryViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E81CDEFA28510E470035F38A /* InformationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E81CDEFB28510E680035F38A /* InformationViewController.swift */,
+			);
+			path = InformationViewController;
+			sourceTree = "<group>";
+		};
 		E8724858284DFF2D007D306B = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +84,7 @@
 		E8724863284DFF2D007D306B /* PhotoBuchetWithoutStoryboard */ = {
 			isa = PBXGroup;
 			children = (
+				E81CDEFA28510E470035F38A /* InformationViewController */,
 				E872488F284E31AD007D306B /* PhotoService */,
 				E8724888284E1B5D007D306B /* Extension */,
 				E8724885284E1543007D306B /* NetworkServices */,
@@ -237,6 +248,7 @@
 				E8724887284E1558007D306B /* NetworkManager.swift in Sources */,
 				E8724891284E31D6007D306B /* PhotoServise.swift in Sources */,
 				E872487B284E048B007D306B /* FavoriteViewController.swift in Sources */,
+				E81CDEFC28510E680035F38A /* InformationViewController.swift in Sources */,
 				E8724865284DFF2D007D306B /* AppDelegate.swift in Sources */,
 				E872488E284E2A83007D306B /* GallaryLayout.swift in Sources */,
 				E87248B8284FE4A2007D306B /* SearchManager.swift in Sources */,

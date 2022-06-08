@@ -25,7 +25,6 @@ class TabBarViewController: UITabBarController {
         viewControllers = [
             generateNavigationViewController(rootViewController: gallaryViewController, tittle: "Gallary", image: (gallaryImage)),
             generateNavigationViewController(rootViewController: favoriteViewController, tittle: "Favorite", image: UIImage(systemName: "heart.circle.fill"))
-        
         ]
     }
     
