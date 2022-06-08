@@ -55,6 +55,6 @@ https://unsplash.com/documentation
 
 ## Примеры
 
-![Simulator Screen Shot - iPhone 11 Pro - 2022-06-09 at 00 42 17](https://user-images.githubusercontent.com/79254522/172722930-8d7bdb0f-f6f4-4421-aa67-68c56c005772.png)
 
+https://disk.yandex.com/i/_d2uglrmjqTUuw
 
