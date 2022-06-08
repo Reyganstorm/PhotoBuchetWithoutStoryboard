@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+
 class FavoriteViewCell: UITableViewCell {
 
     static let identifierID = "customTableCell"
@@ -50,4 +52,6 @@ class FavoriteViewCell: UITableViewCell {
         image.contentMode = .scaleAspectFill
     }
 }
+
+
 

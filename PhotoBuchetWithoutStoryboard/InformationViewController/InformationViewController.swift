@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class InformationViewController: UIViewController {
     
@@ -50,34 +51,127 @@ class InformationViewController: UIViewController {
         return label
     }()
     
-    // MARK: - Prepared Objects
-    var jsonPhoto: Photo!
-    //var realmPhoto: RealmResultObject!
-    
-    private var isAddToRealmArchiv: Bool = false
-    
     private lazy var buttonSaveOrDelete: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(red: 21/255, green: 101/255, blue: 192/255, alpha: 1)
-        button.setTitle(
-            isAddToRealmArchiv ? "Delete" : "Save Task",
-            for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 4
-        //button.addTarget(self, action: #selector(save), for: .touchUpInside)
+        button.addTarget(self, action: #selector(changeStatusButtonPressed), for: .touchUpInside)
         return button
     }()
+    
+    // MARK: - Prepared Objects
+    var jsonPhoto: Photo!
+    var realmPhoto: RealmObject!
+    
+    // MARK: - Objects for sorting
+    private var photoElements: Results<RealmObject>!
+    var isAddToRealmArchiv: Bool = false
+    
+    // MARK: - Object for work
+    private var objectForWork: RealmObject!
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupSubviews(photoView, likesLabel, nameLabel, locationLabel, dateLabel, buttonSaveOrDelete)
         setConstrains()
-        if jsonPhoto != nil {
-            configurationViewWithJSONFiles()
+        
+        photoElements = StorageManager.shared.localRealm.objects(RealmObject.self)
+        isAddToRealmArchiv = sortedImages() { photo in
+            self.objectForWork = photo
         }
         
+        let buttonTitle = isAddToRealmArchiv ? "Delete" : "Save"
+        buttonSaveOrDelete.setTitle(buttonTitle, for: .normal)
+        
+        
+        if jsonPhoto != nil {
+            configurationViewWithJSONFiles()
+        } else {
+            configurationViewWithRealmFiles()
+        }
+    }
+    
+    @objc private func changeStatusButtonPressed() {
+        let alertTittle = isAddToRealmArchiv ? "delete" : "save"
+        showAlert(title: "Do you really want to \(alertTittle) the photo?", objStatus: isAddToRealmArchiv)
+    }
+}
+
+// MARK: Alert
+extension InformationViewController {
+    private func showAlert(
+        title: String,
+        objStatus: Bool
+    ) {
+        let alert = UIAlertController(
+            title: title,
+            message: "Make a choice",
+            preferredStyle: .alert
+        )
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel)
+        
+        let yesAction = UIAlertAction(
+            title: "YES",
+            style: .default) { _ in
+                if objStatus == false {
+                    self.objectForWork = StorageManager.shared.convertResult(self.jsonPhoto)
+                    StorageManager.shared.save(self.objectForWork)
+                    self.buttonSaveOrDelete.setTitle("Delete", for: .normal)
+                    self.isAddToRealmArchiv.toggle()
+                    self.showSimpleAlert(message: "The photo has been added to the collection")
+                } else {
+                    StorageManager.shared.delete(self.objectForWork)
+                    self.buttonSaveOrDelete.setTitle("Add", for: .normal)
+                    self.isAddToRealmArchiv.toggle()
+                    self.showSimpleAlert(message: "Photo has been removed")
+                }
+            }
+        
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    private func showSimpleAlert(
+        message: String
+    ) {
+        let alert = UIAlertController(
+            title: "Succses",
+            message: message,
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(
+            title: "OK",
+            style: .cancel)
+        
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+}
+
+
+extension InformationViewController {
+    private func sortedImages(completion: @escaping(RealmObject) -> Void) -> Bool {
+        if let photo = realmPhoto {
+            completion(photo)
+            return true
+        } else {
+            guard let _ = jsonPhoto else { return false}
+            for photo in photoElements {
+                if jsonPhoto.id == photo.id {
+                    completion(photo)
+                    return true
+                }
+            }
+            return false
+        }
     }
 }
 
@@ -104,6 +198,26 @@ extension InformationViewController {
         """
     }
     
+    private func configurationViewWithRealmFiles() {
+        photoView.fetch(from: realmPhoto.url)
+        photoView.clipsToBounds = true
+        photoView.layer.cornerRadius = 15
+        photoView.contentMode = .scaleAspectFill
+        
+        likesLabel.text = "❤️ \(realmPhoto.likes)"
+        nameLabel.text = realmPhoto.name
+        locationLabel.text = """
+        Location:
+        \(realmPhoto.location)
+        """
+        let datePh = DateManager.shared.getStrFromDate(realmPhoto.dateSome)
+
+        dateLabel.text =
+        """
+        Date of creating:
+        \(datePh)
+        """
+    }
 }
 
 // MARK: - Set Views Private Proporties

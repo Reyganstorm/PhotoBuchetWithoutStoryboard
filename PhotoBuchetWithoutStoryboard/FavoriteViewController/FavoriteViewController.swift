@@ -25,6 +25,7 @@ class FavoriteViewController: UIViewController {
 
         title = "Favorite"
         view.addSubview(tableView)
+        
         photoElements = StorageManager.shared.localRealm.objects(RealmObject.self)
         tableView.dataSource = self
         tableView.delegate = self
@@ -67,5 +68,13 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let infoVC = InformationViewController()
+        let photo = photoElements[indexPath.row]
+        infoVC.realmPhoto = photo
+        present(infoVC, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
