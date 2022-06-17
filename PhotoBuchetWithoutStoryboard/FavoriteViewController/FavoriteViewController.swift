@@ -8,6 +8,10 @@
 import UIKit
 import RealmSwift
 
+protocol FavoriteViewControllerProtocol {
+    func reloadView
+}
+
 class FavoriteViewController: UIViewController {
     
     private var photoElements: Results<RealmObject>!
@@ -78,3 +82,5 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
+
+

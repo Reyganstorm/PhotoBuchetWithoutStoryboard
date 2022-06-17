@@ -9,6 +9,8 @@ import Foundation
 
 enum Links: String {
     case link = "https://api.unsplash.com/photos/?client_id=bpH1swrQ1vFDTkzwyCoMc5F2DCof1g-WWCJg_3svu0c"
+    case id = "https://api.unsplash.com/photos/Y2ravKRtQZ0/like/?client_id=bpH1swrQ1vFDTkzwyCoMc5F2DCof1g-WWCJg_3svu0c"
+    case like = "https://api.unsplash.com//users/rey_shay/likes/?client_id=bpH1swrQ1vFDTkzwyCoMc5F2DCof1g-WWCJg_3svu0c"
 }
 
 enum NetworkError: Error {
