@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 protocol FavoriteViewControllerProtocol {
-    func reloadView
+    func reloadDataInView()
 }
 
 class FavoriteViewController: UIViewController {
@@ -35,11 +35,6 @@ class FavoriteViewController: UIViewController {
         tableView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        photoElements = StorageManager.shared.localRealm.objects(RealmObject.self)
-        tableView.reloadData()
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -83,4 +78,9 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-
+extension FavoriteViewController: FavoriteViewControllerProtocol {
+    func reloadDataInView() {
+        photoElements = StorageManager.shared.localRealm.objects(RealmObject.self)
+        tableView.reloadData()
+    }
+}
